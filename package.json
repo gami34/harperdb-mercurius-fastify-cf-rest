@@ -7,8 +7,7 @@
     "test": "jest --runInBand",
     "clean": "rm -rf dist",
     "build": "npm run clean && tsc",
-    "dev": "nodemon",
-    "start": "node dist/index.js"
+    "start": "nodemon"
   },
   "devDependencies": {
     "@types/supertest": "2.0.10",
