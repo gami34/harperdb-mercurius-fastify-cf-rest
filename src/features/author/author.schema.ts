@@ -21,6 +21,8 @@ export const AuthorType = gql`
 
     type Mutation {
         addAuthor(name: String!, age: Int!): Author!
+        updateAuthor(id: ID!, name: String, age: Int): Author!
+        deleteAuthor(id: ID!): Author!
     }
 `;
 
@@ -36,14 +38,21 @@ export const AuthorResolvers = {
             return authorInstance.findOne({ id });
         },
     },
-    Author: {
-        async books(user: { id: any }) {
-            return bookInstance.find({ condition: `authorId = ${user.id}` });
-        },
-    },
     Mutation: {
         async addAuthor(user: any, { name, age }: { name: string; age: number }) {
             return authorInstance.save({ name, age });
+        },
+        async updateAuthor(_: any, { id, name, age }: { id: string; name?: string; age?: number }) {
+            return authorInstance.update({ id, name, age });
+        },
+        async deleteAuthor(_: any, { id }: { id: string }) {
+            return authorInstance.remove({ id });
+        },
+    },
+    Author: {
+        async books(user: { id: any }) {
+            return bookInstance.find({ condition: `authorId = '${user.id}'` });
+            // return bookInstance.find({ condition: `authorId=${user.id}` });
         },
     },
 };

@@ -28,6 +28,7 @@ const options = {
         },
     },
 };
+
 app.register(fastifyEnv, options).ready((err) => {
     if (err) console.error("you need to setup your HarperDB environmental variable, see format on the .env.exmaple file");
 });

@@ -11,7 +11,15 @@ async function bookRoutes(app: FastifyInstance<Server, IncomingMessage, ServerRe
         const { graphiqlString } = req.body as unknown as { graphiqlString: string };
         return res.graphql(graphiqlString);
     });
-    app.post("/books", async (req, res) => {
+    app.post("/book", async (req, res) => {
+        const { graphiqlString } = req.body as unknown as { graphiqlString: string };
+        return res.graphql(graphiqlString);
+    });
+    app.patch("/book", async (req, res) => {
+        const { graphiqlString } = req.body as unknown as { graphiqlString: string };
+        return res.graphql(graphiqlString);
+    });
+    app.delete("/book", async (req, res) => {
         const { graphiqlString } = req.body as unknown as { graphiqlString: string };
         return res.graphql(graphiqlString);
     });

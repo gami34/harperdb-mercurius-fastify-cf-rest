@@ -42,10 +42,45 @@ class AuthorModel extends LibraryModel {
         if (condition)
             stringifiedData = stringifyData({
                 operation: "sql",
-                sql: `SELECT * FROM library.books WHERE ${condition} LIMIT ${limit}`,
+                sql: `SELECT * FROM library.authors WHERE ` + condition,
             });
 
         return (await harperDB(stringifiedData)).data;
+    }
+
+    async update({ id, name, age }: { id: string; name?: string; age?: number }) {
+        // pseudo total count of documents
+
+        const stringifiedData = stringifyData({
+            operation: "update",
+            schema: this.schema,
+            table: this.AUTHOR_TABLE_NAME,
+            records: [
+                {
+                    id,
+                    name,
+                    age,
+                },
+            ],
+        });
+        await harperDB(stringifiedData);
+        return this.findOne({ id });
+    }
+
+    async remove({ id }: { id: string }) {
+        // pseudo total count of documents
+
+        const oldRecord = await this.findOne({ id });
+        const stringifiedData = stringifyData({
+            operation: "delete",
+            schema: this.schema,
+            table: this.AUTHOR_TABLE_NAME,
+            hash_values: [id],
+            get_attributes: ["*"],
+        });
+
+        await harperDB(stringifiedData);
+        return oldRecord;
     }
 }
 
